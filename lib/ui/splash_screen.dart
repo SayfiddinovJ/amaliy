@@ -1,3 +1,4 @@
+import 'package:amaliy/route.dart';
 import 'package:amaliy/ui/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,21 +13,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _navigator(context);
     return const Scaffold(
       body: SizedBox(
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FlutterLogo(size: 100,),
+            Text('New Application'),
           ],
         ),
       ),
     );
   }
-
-  void navigator(BuildContext context){
+  void _navigator(BuildContext context){
     Future.delayed(const Duration(seconds: 2),(){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+        Navigator.pushReplacementNamed(context, RouteNames.home,);
     });
   }
 }

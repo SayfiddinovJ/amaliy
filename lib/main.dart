@@ -1,5 +1,14 @@
-import 'package:amaliy/ui/splash_screen.dart';
+import 'package:amaliy/route.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late SharedPreferences preferences;
+
+void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
+  preferences = await SharedPreferences.getInstance();
+  runApp(MyApp());
+}
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -12,7 +21,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      initialRoute: RouteNames.initial,
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
