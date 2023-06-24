@@ -93,8 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
             RichText(text: TextSpan(children: [
               const TextSpan(text: 'Price - ',style: TextStyle(
                 color: Colors.white,
+                inherit: true
               ),),
               TextSpan(text: '$price so\'m',style: const TextStyle(
+                decoration: TextDecoration.lineThrough,
                 color: Colors.red,
               ),),
             ],),),

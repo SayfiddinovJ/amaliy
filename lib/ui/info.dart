@@ -1,4 +1,6 @@
+import 'package:amaliy/ui/storage.dart';
 import 'package:flutter/material.dart';
+// ignore: must_be_immutable
 class InfoScreen extends StatefulWidget {
   InfoScreen({
     super.key,
@@ -18,9 +20,20 @@ class _InfoScreenState extends State<InfoScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: (){
+            setState(() {
+              listWidget.add(ListTile(
+                leading: Image.asset(widget.img),
+                title: Text(widget.name),
+              ),);
+            });
+          }, icon: const Icon(Icons.save_alt,color: Colors.black,),),
+          const SizedBox(width: 10,),
+        ],
         leading: IconButton(onPressed: (){setState(() {
           Navigator.pop(context);
-        });}, icon: const Icon(Icons.arrow_back,color: Colors.black,),),
+          });}, icon: const Icon(Icons.arrow_back,color: Colors.black,),),
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text(widget.name,style: const TextStyle(color: Colors.black),),),

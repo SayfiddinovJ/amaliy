@@ -17,32 +17,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('Profile screen'),
       ),
-      body: Column(
-        children: [
-          ListTile(
-            leading: const Text('Name:'),
-            title: Text(preferences.getString('name') ?? ''),
-          ),
-          ListTile(
-            leading: const Text('Password:'),
-            title: Text(isSecure ? '***':preferences.getString('password') ?? ''),
-            trailing: IconButton(onPressed: (){setState(() {
-              isSecure ? isSecure=false : isSecure=true;
-            });}, icon: Icon(isSecure ? Icons.remove_red_eye_sharp : Icons.hide_source),),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: (){setState(() {
-                preferences.remove('name');
-                preferences.remove('password');
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                  return const LoginScreen();
-                }));
-              });},
-              child: const Text('Log out'),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            ListTile(
+              leading: const Text('Name:'),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(preferences.getString('name') ?? ''),
+              ),
             ),
-          )
-        ],
+            ListTile(
+              leading: const Text('Password:'),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(isSecure ? '***':preferences.getString('password') ?? ''),
+              ),
+              trailing: IconButton(onPressed: (){setState(() {
+                isSecure ? isSecure=false : isSecure=true;
+                });}, icon: Icon(isSecure ? Icons.visibility : Icons.visibility_off),),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: (){setState(() {
+                  preferences.remove('name');
+                  preferences.remove('password');
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    return const LoginScreen();
+                  }));
+                });},
+                child: const Text('Log out'),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
