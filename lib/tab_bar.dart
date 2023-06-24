@@ -1,8 +1,11 @@
 import 'package:amaliy/ui/favorites_screen.dart';
 import 'package:amaliy/ui/home_screen.dart';
+import 'package:amaliy/ui/login_screen.dart';
 import 'package:amaliy/ui/profile_screen.dart';
 import 'package:amaliy/ui/shop_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'main.dart';
 
 class TabsBox extends StatefulWidget {
   const TabsBox({Key? key}) : super(key: key);
@@ -38,6 +41,15 @@ class _TabsBoxState extends State<TabsBox> {
         onTap: (index) {
           setState(() {
             currentTabIndex = index;
+            String name = preferences.getString('name') ?? '';
+            String password = preferences.getString('password') ?? '';
+            if(name=='' && password==''){
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return LoginScreen();
+              }));
+            }else{
+              currentTabIndex = index;
+            }
           });
           print(index);
         },

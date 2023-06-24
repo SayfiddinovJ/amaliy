@@ -1,4 +1,5 @@
 import 'package:amaliy/main.dart';
+import 'package:amaliy/ui/info.dart';
 import 'package:amaliy/ui/login_screen.dart';
 import 'package:amaliy/utils/app_utils.dart';
 import 'package:flutter/material.dart';
@@ -22,35 +23,87 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
+        childAspectRatio: 0.85,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(10),
         children: [
-          ...List.generate(AppImages.myList.length, (index){
-            return GestureDetector(
-              onTap: (){
-                setState(() {
-                  String a = preferences.getString('name') ?? '';
-                  if(a==''){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return LoginScreen();
-                    }));
-                  }else{
-                    print(index);
-                  }
-                });
-              },
-
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Image.asset(AppImages.myList[index]),
-              ),
-            );
-          },),
+          _container(AppImages.airpods, 'Airpods', '340000', '339000',0),
+          _container(AppImages.iphone, 'Iphone', '12000000', '119000000',1),
+          _container(AppImages.keyboardMouse, 'Keyboard and mouse', '450000', '449000',2),
+          _container(AppImages.mac, 'Mac', '14000000', '13009000',3),
+          _container(AppImages.pc, 'PC', '17900000', '16900000',4),
+          _container(AppImages.speaker, 'Speaker', '300000', '209000',5),
         ],
+      ),
+    );
+  }
+  _container(String img,String name,String price,String price2,int index){
+    return GestureDetector(
+      onTap: (){
+        setState(() {
+          String name1 = preferences.getString('name') ?? '';
+          String password = preferences.getString('password') ?? '';
+          if(name1=='' && password==''){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+              return const LoginScreen();
+            }));
+          }else{
+            switch(index){
+              case 0:
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+              case 1:
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+              case 2:
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+              case 3:
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+              case 4:
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+              case 5:
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+            }
+          }
+        });
+      },
+
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: SizedBox(
+                  height: 105,
+                  child: Image.asset(img)
+              ),
+            ),
+            const Spacer(),
+            RichText(text: TextSpan(children: [
+              const TextSpan(text: 'Name - ',style: TextStyle(
+                color: Colors.white,
+              ),),
+              TextSpan(text: name,style: const TextStyle(
+                color: Colors.yellow,
+              ),),
+            ],),),
+            RichText(text: TextSpan(children: [
+              const TextSpan(text: 'Price - ',style: TextStyle(
+                color: Colors.white,
+              ),),
+              TextSpan(text: '$price so\'m',style: const TextStyle(
+                color: Colors.red,
+              ),),
+            ],),),
+            Text(price2,style: const TextStyle(
+              color: Colors.yellow
+            ),),
+            const SizedBox(height: 5,),
+          ],
+        ),
       ),
     );
   }
