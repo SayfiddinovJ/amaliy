@@ -6,9 +6,13 @@ class InfoScreen extends StatefulWidget {
     super.key,
     required this.name,
     required this.img,
+    required this.price,
+    required this.price2,
   });
   String name;
   String img;
+  String price;
+  String price2;
 
   @override
   State<InfoScreen> createState() => _InfoScreenState();
@@ -23,12 +27,49 @@ class _InfoScreenState extends State<InfoScreen> {
         actions: [
           IconButton(onPressed: (){
             setState(() {
-              listWidget.add(ListTile(
-                leading: Image.asset(widget.img),
-                title: Text(widget.name),
-              ),);
-            });
-          }, icon: const Icon(Icons.save_alt,color: Colors.black,),),
+              listWidget.add(Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 40),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 20,),
+                    child: Image.asset(widget.img,height: 150,),
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RichText(text: TextSpan(children: [
+                        const TextSpan(text: 'Name - ',style: TextStyle(
+                          color: Colors.white,
+                        ),),
+                        TextSpan(text: widget.name,style: const TextStyle(
+                          color: Colors.yellow,
+                        ),),
+                      ],),),
+                      RichText(text: TextSpan(children: [
+                        const TextSpan(text: 'Price - ',style: TextStyle(
+                            color: Colors.white,
+                            inherit: true
+                        ),),
+                        TextSpan(text: '${widget.price} so\'m',style: const TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.red,
+                        ),),
+                      ],),),
+                      Text(widget.price2,style: const TextStyle(
+                          color: Colors.yellow
+                      ),),
+                    ],
+                  ),
+                ),
+              ),
+              );
+            },);
+            }, icon: const Icon(Icons.save_alt,color: Colors.black,),),
           const SizedBox(width: 10,),
         ],
         leading: IconButton(onPressed: (){setState(() {

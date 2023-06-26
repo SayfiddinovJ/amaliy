@@ -50,17 +50,17 @@ class _HomeScreenState extends State<HomeScreen> {
           }else{
             switch(index){
               case 0:
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img, price: price, price2: price2,),),);
               case 1:
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img, price: price, price2: price2,),),);
               case 2:
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img, price: price, price2: price2,),),);
               case 3:
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img, price: price, price2: price2,),),);
               case 4:
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img, price: price, price2: price2,),),);
               case 5:
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img),),);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>InfoScreen(name: name, img: img, price: price, price2: price2,),),);
             }
           }
         });
