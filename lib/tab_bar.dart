@@ -1,8 +1,8 @@
-import 'package:amaliy/ui/favorites_screen.dart';
-import 'package:amaliy/ui/home_screen.dart';
-import 'package:amaliy/ui/login_screen.dart';
-import 'package:amaliy/ui/profile_screen.dart';
-import 'package:amaliy/ui/shop_screen.dart';
+import 'package:amaliy/ui/favorites/favorites_screen.dart';
+import 'package:amaliy/ui/home/home_screen.dart';
+import 'package:amaliy/ui/profile/login/login_screen.dart';
+import 'package:amaliy/ui/profile/profile_screen.dart';
+import 'package:amaliy/ui/shop/shop_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';

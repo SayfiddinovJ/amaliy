@@ -33,7 +33,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 40),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 40,horizontal: 10),
                   leading: Padding(
                     padding: const EdgeInsets.only(left: 20,),
                     child: Image.asset(widget.img,height: 150,),

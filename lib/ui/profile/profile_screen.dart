@@ -1,5 +1,5 @@
 import 'package:amaliy/main.dart';
-import 'package:amaliy/ui/login_screen.dart';
+import 'package:amaliy/ui/profile/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {

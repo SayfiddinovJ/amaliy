@@ -1,8 +1,9 @@
 import 'package:amaliy/main.dart';
-import 'package:amaliy/ui/info.dart';
-import 'package:amaliy/ui/login_screen.dart';
+import 'package:amaliy/ui/home/info/info_screen.dart';
+import 'package:amaliy/ui/profile/login/login_screen.dart';
 import 'package:amaliy/utils/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  bool like = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,38 +75,47 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.blue,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Center(
-              child: SizedBox(
-                  height: 105,
-                  child: Image.asset(img)
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                      height: 105,
+                      child: Image.asset(img),
+                  ),
+                ),
+                const Spacer(),
+                RichText(text: TextSpan(children: [
+                  const TextSpan(text: 'Name - ',style: TextStyle(
+                    color: Colors.white,
+                  ),),
+                  TextSpan(text: name,style: const TextStyle(
+                    color: Colors.yellow,
+                  ),),
+                ],),),
+                RichText(text: TextSpan(children: [
+                  const TextSpan(text: 'Price - ',style: TextStyle(
+                    color: Colors.white,
+                    inherit: true
+                  ),),
+                  TextSpan(text: '$price so\'m',style: const TextStyle(
+                    decoration: TextDecoration.lineThrough,
+                    color: Colors.red,
+                  ),),
+                ],),),
+                Text(price2,style: const TextStyle(
+                  color: Colors.yellow
+                ),),
+                const SizedBox(height: 5,),
+              ],
             ),
-            const Spacer(),
-            RichText(text: TextSpan(children: [
-              const TextSpan(text: 'Name - ',style: TextStyle(
-                color: Colors.white,
-              ),),
-              TextSpan(text: name,style: const TextStyle(
-                color: Colors.yellow,
-              ),),
-            ],),),
-            RichText(text: TextSpan(children: [
-              const TextSpan(text: 'Price - ',style: TextStyle(
-                color: Colors.white,
-                inherit: true
-              ),),
-              TextSpan(text: '$price so\'m',style: const TextStyle(
-                decoration: TextDecoration.lineThrough,
-                color: Colors.red,
-              ),),
-            ],),),
-            Text(price2,style: const TextStyle(
-              color: Colors.yellow
-            ),),
-            const SizedBox(height: 5,),
+            const Positioned(
+              top: 0,
+              right: 0,
+              child: LikeButton(),
+            ),
           ],
         ),
       ),
