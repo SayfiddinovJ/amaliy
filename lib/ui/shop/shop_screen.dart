@@ -1,3 +1,4 @@
+import 'package:amaliy/sqlflite/sqlflite.dart';
 import 'package:amaliy/ui/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -64,6 +65,7 @@ class ShopScreen extends StatelessWidget {
               child: element,
               ),
             ),
+            Text(LocalDatabase.getAllToDos().toString())
           ],
         ),
       ),

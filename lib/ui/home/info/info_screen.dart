@@ -1,5 +1,7 @@
 import 'package:amaliy/ui/storage.dart';
 import 'package:flutter/material.dart';
+
+import '../../../sqlflite/sqlflite.dart';
 // ignore: must_be_immutable
 class InfoScreen extends StatefulWidget {
   InfoScreen({
@@ -27,6 +29,7 @@ class _InfoScreenState extends State<InfoScreen> {
         actions: [
           IconButton(onPressed: (){
             setState(() {
+              LocalDatabase.insertTodo(widget.img, widget.name, widget.price);
               listWidget.add(Container(
                 decoration: BoxDecoration(
                   color: Colors.blue,
@@ -62,7 +65,8 @@ class _InfoScreenState extends State<InfoScreen> {
                       ],),),
                       Text(widget.price2,style: const TextStyle(
                           color: Colors.yellow
-                      ),),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -78,6 +82,8 @@ class _InfoScreenState extends State<InfoScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text(widget.name,style: const TextStyle(color: Colors.black),),),
+
+
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),

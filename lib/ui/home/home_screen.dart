@@ -1,4 +1,5 @@
 import 'package:amaliy/main.dart';
+import 'package:amaliy/sqlflite/sqlflite.dart';
 import 'package:amaliy/ui/home/info/info_screen.dart';
 import 'package:amaliy/ui/profile/login/login_screen.dart';
 import 'package:amaliy/utils/app_utils.dart';
@@ -111,10 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 5,),
               ],
             ),
-            const Positioned(
+            Positioned(
               top: 0,
               right: 0,
-              child: LikeButton(),
+              child: LikeButton(
+                onTap: (like)async{
+                  LocalDatabase.insertTodo(img, name, price);
+                  like==false;
+                },
+              ),
             ),
           ],
         ),
