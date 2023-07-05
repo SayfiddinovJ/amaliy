@@ -1,7 +1,9 @@
+import 'package:amaliy/models/product_model/product_model.dart';
 import 'package:amaliy/ui/storage.dart';
 import 'package:flutter/material.dart';
 
-import '../../../sqlflite/sqlflite.dart';
+import '../../../data/local/db/local_database.dart';
+
 // ignore: must_be_immutable
 class InfoScreen extends StatefulWidget {
   InfoScreen({
@@ -29,7 +31,7 @@ class _InfoScreenState extends State<InfoScreen> {
         actions: [
           IconButton(onPressed: (){
             setState(() {
-              LocalDatabase.insertTodo(widget.img, widget.name, widget.price);
+              LocalDatabase.insertProduct(ProductModelSql(image: widget.img, name: widget.name, count: 1));
               listWidget.add(Container(
                 decoration: BoxDecoration(
                   color: Colors.blue,

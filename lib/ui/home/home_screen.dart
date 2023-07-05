@@ -1,10 +1,11 @@
 import 'package:amaliy/main.dart';
-import 'package:amaliy/sqlflite/sqlflite.dart';
 import 'package:amaliy/ui/home/info/info_screen.dart';
 import 'package:amaliy/ui/profile/login/login_screen.dart';
 import 'package:amaliy/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+
+import '../../data/local/db/local_database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -116,10 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
               top: 0,
               right: 0,
               child: LikeButton(
-                onTap: (like)async{
-                  LocalDatabase.insertTodo(img, name, price);
-                  like==false;
-                },
+                onTap: (like)async{},
               ),
             ),
           ],
