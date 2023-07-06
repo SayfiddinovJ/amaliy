@@ -1,11 +1,13 @@
 import 'package:amaliy/main.dart';
+import 'package:amaliy/models/product_model/product_model.dart';
 import 'package:amaliy/ui/home/info/info_screen.dart';
+import 'package:amaliy/ui/home/widgets/search_view_screen.dart';
 import 'package:amaliy/ui/profile/login/login_screen.dart';
 import 'package:amaliy/utils/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:like_button/like_button.dart';
 
 import '../../data/local/db/local_database.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,13 +18,49 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String searchText = "";
 
+  int selectedMenu = 1;
+
+  List<ProductModelSql> contacts = [];
+  List<ProductModelSql> allContacts = [];
+
+  _updateContacts() async {
+    allContacts = await LocalDatabase.getAllProducts();
+    contacts = await LocalDatabase.getAllProducts();
+    setState(() {});
+  }
+
+  _getContactsByQuery(String query) async {
+    contacts = await LocalDatabase.getProductsByQuery(query);
+    setState(() {});
+  }
+  bool isSearch=false;
+  @override
+  void initState() {
+
+    _updateContacts();
+    super.initState();
+  }
   bool like = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
+        actions: [
+          IconButton(onPressed: () async {
+            searchText = await showSearch(
+              context: context,
+              delegate: ContactSearchView(
+                suggestionList: allContacts.map((e) => e.name).toList(),
+                id: allContacts.map((e) => e.id).toList(),
+              ),
+            );
+            if(searchText.isNotEmpty) _getContactsByQuery(searchText);
+            print("RESULT:$searchText");
+          }, icon: const Icon(Icons.search)),
+        ],
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -116,9 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
               top: 0,
               right: 0,
-              child: LikeButton(
-                onTap: (like)async{},
-              ),
+              child: IconButton(
+                onPressed: (){setState(() {
+                  like ? like = false : like = true;
+                });},
+                icon: Icon(Icons.favorite,color: like ? Colors.red:Colors.white,),
+              )
             ),
           ],
         ),

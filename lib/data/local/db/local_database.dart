@@ -121,6 +121,7 @@ class LocalDatabase {
     return allToDos;
   }
 
+  // ignore: body_might_complete_normally_nullable
   static Future<ProductModelSql?> getSingleContact(int id) async {
     List<ProductModelSql> contacts = [];
     final db = await getInstance.database;
@@ -135,5 +136,17 @@ class LocalDatabase {
     if (contacts.isNotEmpty) {
       return contacts.first;
     }
+  }
+  static Future<List<ProductModelSql>> getProductsByQuery(String query) async {
+    List<ProductModelSql>? allToDos = [];
+    final db = await getInstance.database;
+    allToDos = (await db.query(
+      ProductModelFields.productsTable,
+      where: "${ProductModelFields.name} LIKE ?",
+      whereArgs: [query],
+    ))
+        .map((e) => ProductModelSql.fromJson(e)).cast<ProductModelSql>()
+        .toList();
+    return allToDos;
   }
 }

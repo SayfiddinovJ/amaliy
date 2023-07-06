@@ -31,7 +31,7 @@ class _InfoScreenState extends State<InfoScreen> {
         actions: [
           IconButton(onPressed: (){
             setState(() {
-              LocalDatabase.insertProduct(ProductModelSql(image: widget.img, name: widget.name, count: 1));
+              LocalDatabase.insertProduct(ProductModelSql(image: widget.img, name: widget.name, count: 1,));
               listWidget.add(Container(
                 decoration: BoxDecoration(
                   color: Colors.blue,
