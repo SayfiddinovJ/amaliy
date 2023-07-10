@@ -1,5 +1,11 @@
-import 'package:amaliy/ui/splash_screen.dart';
+import 'package:amaliy/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
+
+void main()async{
+
+  runApp(const MyApp());
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -10,9 +16,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: HomeScreen(),
     );
   }
 }
