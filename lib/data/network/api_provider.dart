@@ -1,22 +1,43 @@
 import 'dart:convert';
-import 'package:amaliy/data/models/valorant_model.dart';
-import 'package:amaliy/data/models/universal_data.dart';
+import 'dart:io';
+
+import 'package:amaliy/data/model/translate_model.dart';
+import 'package:amaliy/data/model/universal_data.dart';
+import 'package:amaliy/data/network/network_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+
 class ApiProvider {
-  static Future<UniversalData> getPokemon() async {
-    Uri uri = Uri.parse(
-        "https://valorant-api.com/v1/agents");
+  static Future<UniversalData> getWord({
+    required String word,
+    required String lang,
+  }) async {
+    Uri uri = Uri.https(
+      'api.mymemory.translated.net',
+      "/get",
+      {
+        "q": word,
+        "langpair": lang
+      },
+    );
 
     try {
-      http.Response response = await http.get(uri);
-      if (response.statusCode == 200) {
-        print('200-----------${jsonDecode(response.body)['data'][0]['backgroundGradientColors']}');
+      http.Response response = await http.post(uri, headers: {
+        "q": word,
+        "langpair": lang
+      });
+
+      if (response.statusCode == HttpStatus.ok) {
         return UniversalData(
-            data: ValorantModel.fromJson(jsonDecode(response.body)['data'][0]));
+            data: ResponseData.fromJson(jsonDecode(response.body)));
       }
-      print('Error-----------${jsonDecode(response.body)['data']}');
-      return UniversalData(error: "Error!");
+      return handleHttpErrors(response);
+    } on SocketException {
+      return UniversalData(error: "Internet Error!");
+    } on FormatException {
+      return UniversalData(error: "Format Error!");
     } catch (err) {
+      debugPrint("ERROR:$err. ERROR TYPE: ${err.runtimeType}");
       return UniversalData(error: err.toString());
     }
   }
