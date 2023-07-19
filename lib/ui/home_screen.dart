@@ -1,7 +1,9 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:amaliy/data/model/main_model.dart';
 import 'package:amaliy/data/model/universal_data.dart';
 import 'package:amaliy/data/network/api_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,8 +14,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  bool isDark = false;
+
+  _themeState() async {
+    final savedThemeMode = await AdaptiveTheme.getThemeMode();
+    if (savedThemeMode == AdaptiveThemeMode.dark) {
+      setState(() {
+        isDark = true;
+      });
+    }
+  }
   @override
   void initState() {
+    _themeState();
     super.initState();
   }
 
@@ -21,7 +34,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text('Profile',style: Theme.of(context).textTheme.titleLarge,),
+        actions: [
+          CupertinoSwitch(
+            value: isDark,
+            onChanged: (changedValue) {
+              if (changedValue) {
+                AdaptiveTheme.of(context).setDark();
+                isDark = true;
+              } else {
+                AdaptiveTheme.of(context).setLight();
+                isDark = false;
+              }
+            },
+          ),
+          IconButton(
+            onPressed: (){
+              setState(() {});
+            },
+            icon: const Icon(Icons.refresh,color: Colors.white,),
+            color: Theme.of(context).iconTheme.color,
+          ),
+        ],
       ),
       body: FutureBuilder<UniversalData>(
         future: ApiProvider.getUser(),
@@ -51,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    Text('Fullname: ${mainModel.result[0].name.title} ${mainModel.result[0].name.first} ${mainModel.result[0].name.last}'),
+                    Text('Full name: ${mainModel.result[0].name.title} ${mainModel.result[0].name.first} ${mainModel.result[0].name.last}'),
 
                     Text('Location: ${mainModel.result[0].location.country}, ${mainModel.result[0].location.state}, ${mainModel.result[0].location.city}, ${mainModel.result[0].location.street.name}, ${mainModel.result[0].location.street.number}'),
 
