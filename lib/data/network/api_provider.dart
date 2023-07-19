@@ -1,35 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:amaliy/data/model/translate_model.dart';
+import 'package:amaliy/data/model/main_model.dart';
 import 'package:amaliy/data/model/universal_data.dart';
 import 'package:amaliy/data/network/network_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class ApiProvider {
-  static Future<UniversalData> getWord({
-    required String word,
-    required String lang,
-  }) async {
+  static Future<UniversalData> getUser() async {
     Uri uri = Uri.https(
-      'api.mymemory.translated.net',
-      "/get",
-      {
-        "q": word,
-        "langpair": lang
-      },
+      'randomuser.me',
+      "/api",
     );
 
     try {
-      http.Response response = await http.post(uri, headers: {
-        "q": word,
-        "langpair": lang
-      });
+      http.Response response = await http.get(uri);
 
       if (response.statusCode == HttpStatus.ok) {
         return UniversalData(
-            data: ResponseData.fromJson(jsonDecode(response.body)));
+            data: MainModel.fromJson(jsonDecode(response.body)));
       }
       return handleHttpErrors(response);
     } on SocketException {
