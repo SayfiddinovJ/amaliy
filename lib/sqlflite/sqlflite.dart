@@ -1,3 +1,4 @@
+import 'package:amaliy/model/dog_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -33,12 +34,7 @@ class LocalDatabase {
     const intType = "INTEGER DEFAULT 0";
 
     await db.execute('''
-    CREATE TABLE products (
-    id $idType,
-    image $textType,
-    name $textType,
-    price $textType,
-    )
+    CREATE TABLE dogs (id $idType, name $textType, age $intType)
     ''');
 
     // '''
@@ -51,21 +47,29 @@ class LocalDatabase {
     // );
   }
 
-  static Future<int> insertTodo(String image,String name,String price) async {
+  static Future<int> insertDog(Dog dog) async {
     final db = await getInstance.database;
-    final int id = await db.insert('products', {
-      "image":image,
-      "name":name,
-      "price":price
-    });
+    final int id = await db.insert('dogs',
+      dog.toMap(),
+    );
     return id;
   }
 
-  static Future<List<Map<String, Object?>>> getAllToDos() async {
-    List<Map<String,Object?>> allToDos = [];
-    final db = await getInstance.database;
-    allToDos = (await db.query('products')).toList();
-    return allToDos;
+  Future<List<Dog>> dogs() async {
+    // Get a reference to the database.
+    final db = await database;
+
+    // Query the table for all The Dogs.
+    final List<Map<String, dynamic>> maps = await db.query('dogs');
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return Dog(
+        maps[i]['id'],
+        name: maps[i]['name'],
+        age: maps[i]['age'],
+      );
+    });
   }
 
   // static updateToDoStatus({required int id, required int statusIndex}) async {
