@@ -1,11 +1,12 @@
-import 'package:amaliy/tab_bar.dart';
+import 'package:amaliy/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 late SharedPreferences preferences;
+List<String> lan = ['en','uz','ru',];
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   preferences= await SharedPreferences.getInstance();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TabsBox(),
+      home: HomeScreen(),
     );
   }
 }
