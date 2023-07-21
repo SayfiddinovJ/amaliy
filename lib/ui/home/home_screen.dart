@@ -1,63 +1,50 @@
-import 'package:amaliy/data/models/valorant_model.dart';
+import 'package:amaliy/data/models/data_model.dart';
 import 'package:amaliy/data/models/universal_data.dart';
 import 'package:amaliy/data/network/api_provider.dart';
-import 'package:amaliy/utils/app_utils.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  late DataModel dataModel;
+  bool isLoading = true;
+
+  _getInitialData() async {
+    setState(() {
+      isLoading = true;
+    });
+    List<UniversalData> results = await Future.wait([
+      ApiProvider.getProducts(10)
+    ]);
+
+    if (results[0].error.isEmpty) {
+      dataModel = results[0].data as DataModel;
+    }
+    print(dataModel.data.length);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    _getInitialData();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: Colors.white,
-      body: Column(
+      body: ListView(
         children: [
-          FutureBuilder<UniversalData>(
-            future: ApiProvider.getPokemon(),
-            builder: (BuildContext context, AsyncSnapshot<UniversalData> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasData) {
-                if (snapshot.data!.error.isEmpty) {
-                  ValorantModel valorantModel =
-                  snapshot.data!.data as ValorantModel;
-                  return Expanded(
-                    child: GridView.count(
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 0.75,
-                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-                      crossAxisCount: 2,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start ,
-                            children: [
-                              CachedNetworkImage(imageUrl: valorantModel.fullPortrait),
-                              Text(valorantModel.displayName),
-                              Text(valorantModel.developerName),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              }
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
-            },
-          ),
+          ...List.generate(dataModel.data.length, (index) => Text(dataModel.data[index].name)),
         ],
       ),
     );
