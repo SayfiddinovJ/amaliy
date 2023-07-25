@@ -13,6 +13,7 @@ class StorageRepository {
       _storageRepository = st;
       await _storageRepository!._init();
     }
+
     return _storageRepository!;
   }
 
