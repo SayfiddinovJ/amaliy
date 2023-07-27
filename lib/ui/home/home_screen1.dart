@@ -14,19 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  bool isDark = false;
-
-  _themeState() async {
-    final savedThemeMode = await AdaptiveTheme.getThemeMode();
-    if (savedThemeMode == AdaptiveThemeMode.dark) {
-      setState(() {
-        isDark = true;
-      });
-    }
-  }
   @override
   void initState() {
-    _themeState();
     super.initState();
   }
 
@@ -34,20 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile',style: Theme.of(context).textTheme.titleLarge,),
+        title: const Text('Profile',),
         actions: [
-          CupertinoSwitch(
-            value: isDark,
-            onChanged: (changedValue) {
-              if (changedValue) {
-                AdaptiveTheme.of(context).setDark();
-                isDark = true;
-              } else {
-                AdaptiveTheme.of(context).setLight();
-                isDark = false;
-              }
-            },
-          ),
           IconButton(
             onPressed: (){
               setState(() {});
