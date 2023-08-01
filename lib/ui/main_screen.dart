@@ -1,36 +1,39 @@
-import 'package:amaliy/ui/3_screen/screen.dart';
-import 'package:amaliy/ui/bottom_navigation_bar/tab_box.dart';
-import 'package:amaliy/ui/home/home_screen1.dart';
 import 'package:flutter/material.dart';
-class MainScreen extends StatelessWidget {
+
+// ignore: must_be_immutable
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  bool isChange = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main Screen'),
-      ),
-      body: ListView(
+      backgroundColor: isChange ? Colors.white : Colors.black,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ListTile(
-            title: const Text('Home screen'),
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-            },
+          Center(
+            child: Switch(
+              activeColor: Colors.blue,
+              activeTrackColor: Colors.cyan,
+              inactiveThumbColor: Colors.blueGrey.shade600,
+              inactiveTrackColor: Colors.grey.shade400,
+              splashRadius: 50.0,
+              value: isChange,
+              onChanged: (bool value) {
+                setState(() {
+                  isChange = value;
+                });
+              },
+            ),
           ),
-          ListTile(
-            title: const Text('Three screens'),
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const Screen()));
-            },
-          ),
-          ListTile(
-            title: const Text('Tab box screen'),
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const TabBox()));
-            },
-          ),
+          Text('Log out',style: TextStyle(color: isChange ? Colors.black : Colors.white),),
         ],
       ),
     );
