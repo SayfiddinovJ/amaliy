@@ -1,8 +1,5 @@
-import 'package:amaliy/ui/favorites/favorites_screen.dart';
 import 'package:amaliy/ui/home/home_screen.dart';
-import 'package:amaliy/ui/profile/login/login_screen.dart';
 import 'package:amaliy/ui/profile/profile_screen.dart';
-import 'package:amaliy/ui/shop/shop_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -22,8 +19,6 @@ class _TabsBoxState extends State<TabsBox> {
   @override
   void initState() {
     screens.add(HomeScreen());
-    screens.add(ShopScreen());
-    screens.add(FavoritesScreen());
     screens.add(ProfileScreen());
     super.initState();
   }
@@ -38,33 +33,11 @@ class _TabsBoxState extends State<TabsBox> {
         backgroundColor: Colors.blue,
         showSelectedLabels: false,
         landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-        onTap: (index) {
-          setState(() {
-            currentTabIndex = index;
-            String name = preferences.getString('name') ?? '';
-            String password = preferences.getString('password') ?? '';
-            if(name=='' && password==''){
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return LoginScreen();
-              }));
-            }else{
-              currentTabIndex = index;
-            }
-          });
-          print(index);
-        },
+        onTap: (index) {},
         currentIndex: currentTabIndex,
         items: [
           getBottomNavItem(
             icon: Icons.home,
-            label: "",
-          ),
-          getBottomNavItem(
-            icon: Icons.shopping_cart,
-            label: "",
-          ),
-          getBottomNavItem(
-            icon: Icons.favorite,
             label: "",
           ),
           getBottomNavItem(
