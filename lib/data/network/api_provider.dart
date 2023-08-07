@@ -10,12 +10,23 @@ import 'package:http/http.dart' as http;
 class ApiProvider {
   static Future<UniversalData> getUser() async {
     Uri uri = Uri.https(
-      'randomuser.me',
-      "/api",
+      'api.restful-api.dev',
+      "/objects",
     );
 
     try {
-      http.Response response = await http.get(uri);
+      http.Response response = await http.post(
+        uri,
+        body: {
+          "name": "1202UltraMaxPhone",
+          "data": {
+            "year": 2050,
+            "price": 9999.99,
+            "CPU model": "Eplab bo'miydigan cpu",
+            "Hard disk size": "Cheksiz"
+          }
+        },
+      );
 
       if (response.statusCode == HttpStatus.ok) {
         return UniversalData(

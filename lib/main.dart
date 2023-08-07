@@ -1,8 +1,10 @@
+import 'package:amaliy/data/model/data_model.dart';
 import 'package:amaliy/data/model/main_model.dart';
 import 'package:amaliy/providers/count_provider.dart';
 import 'package:amaliy/providers/model_provider.dart';
 import 'package:amaliy/providers/number_provider.dart';
 import 'package:amaliy/providers/tab_box_provider.dart';
+import 'package:amaliy/service/notificaion_service.dart';
 import 'package:amaliy/ui/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,7 @@ late SharedPreferences preferences;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   preferences = await SharedPreferences.getInstance();
+  NotificationService.instance.init();
   runApp(MultiProvider(
     providers: [
       Provider(
@@ -20,16 +23,8 @@ void main() async {
         lazy: true,
       ),
       ChangeNotifierProvider(
-        create: (context) => CountProvider(count: 0),
-        lazy: true,
-      ),
-      ChangeNotifierProvider(
         create: (context) =>
-            MainModelProvider(mainModel: MainModel(result: [])),
-        lazy: true,
-      ),
-      ChangeNotifierProvider(
-        create: (context) => TabBoxProvider(count: 0),
+            MainModelProvider(mainModel: MainModel( name: '', data: DataModel(price: 0))),
         lazy: true,
       ),
     ],

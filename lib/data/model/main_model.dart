@@ -1,16 +1,16 @@
-
-import 'package:amaliy/data/model/result_model.dart';
+import 'package:amaliy/data/model/data_model.dart';
 
 class MainModel{
-  final List<ResultModel> result;
+  final String name;
+  DataModel data;
   MainModel({
-    required this.result,
+    required this.name,
+    required this.data,
   });
   factory MainModel.fromJson(Map<String, dynamic> json){
-    print('Response');
-    return MainModel(result: (json["results"] as List?)
-        ?.map((e) => ResultModel.fromJson(e))
-        .toList() ?? [],
+    return MainModel(
+      name: json['name'],
+      data: DataModel.fromJson(json["data"]),
     );
   }
 }

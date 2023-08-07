@@ -1,18 +1,18 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:adaptive_theme/adaptive_theme.dart' as detail_screen;
 import 'package:amaliy/data/model/main_model.dart';
 import 'package:amaliy/data/model/universal_data.dart';
 import 'package:amaliy/data/network/api_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class DetailScreen extends StatefulWidget {
+  const DetailScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DetailScreenState extends State<DetailScreen> {
 
   @override
   void initState() {
@@ -52,28 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(height: 16,),
                     Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: CachedNetworkImage(
-                          height: 100,
-                          width: 100,
-                          imageUrl: mainModel.result[0].picture.large,
-                        ),
-                      ),
+                      child: Text(mainModel.name)
                     ),
-                    const SizedBox(height: 20,),
-                    Text('Full name: ${mainModel.result[0].name.title} ${mainModel.result[0].name.first} ${mainModel.result[0].name.last}'),
-
-                    Text('Location: ${mainModel.result[0].location.country}, ${mainModel.result[0].location.state}, ${mainModel.result[0].location.city}, ${mainModel.result[0].location.street.name}, ${mainModel.result[0].location.street.number}'),
-
-                    Text('Email: ${mainModel.result[0].email}'),
-
-                    Text('Username | Password: ${mainModel.result[0].login.username} | ${mainModel.result[0].login.password}'),
-
-                    Text('Phone: ${mainModel.result[0].phone}'),
-
-                    Text('Age: ${mainModel.result[0].dob.age}'),
-
                   ],
                 ),
               );
